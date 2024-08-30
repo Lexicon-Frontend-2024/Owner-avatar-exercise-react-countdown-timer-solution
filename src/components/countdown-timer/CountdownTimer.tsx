@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { Button } from "../button";
 
 export function CountdownTimer(): ReactElement {
   return (
@@ -7,8 +8,8 @@ export function CountdownTimer(): ReactElement {
         <header className="countdown-header">
           <h2>Timer</h2>
           <div className="actions">
-            <button>Reset</button>
-            <button>Play/Paus</button>
+            <Button icon="restart_alt" />
+            <Button icon="pause" />
           </div>
         </header>
         <h1 className="countdown">60</h1>

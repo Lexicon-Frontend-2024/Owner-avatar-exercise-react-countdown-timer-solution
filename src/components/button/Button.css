@@ -7,11 +7,26 @@
   border-radius: 5px;
   cursor: pointer;
 
+  &:disabled {
+    cursor: not-allowed;
+
+    .icon {
+      color: gray;
+    }
+  }
+
   &:hover {
     background-color: whitesmoke;
 
     .icon {
       color: black;
+    }
+
+    &:disabled {
+      background-color: transparent;
+      .icon {
+        color: gray;
+      }
     }
   }
 }
