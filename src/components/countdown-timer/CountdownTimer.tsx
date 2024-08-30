@@ -1,12 +1,13 @@
-import { FormEventHandler, ReactElement, useRef, useState } from "react";
+import { FormEventHandler, ReactElement, useEffect, useRef, useState } from "react";
 import { Button } from "../button";
 
 export function CountdownTimer(): ReactElement {
-  const [isActive, setIsActive] = useState<boolean>(false);
-  const [timeLeft, setTimeLeft] = useState<number>(80);
+  const [isActive, setIsActive] = useState<boolean>(true);
+  const [timeLeft, setTimeLeft] = useState<number>(5);
   const [value, setValue] = useState<number | string>("");
 
   const timerId = useRef<number>();
+  const computedCountdownState = isActive ? "pause" : "play_arrow";
 
   const handleOnSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -15,6 +16,27 @@ export function CountdownTimer(): ReactElement {
     setValue("");
   };
 
+  useEffect(() => {
+    if (isActive === true) {
+      timerId.current = setInterval(() => {
+        setTimeLeft((t) => t - 1);
+      }, 1000);
+
+      console.log("Timer is running..");
+    }
+
+    if (isActive === false) {
+      clearInterval(timerId.current);
+      console.log("Timer has stopped.");
+    }
+  }, [isActive]);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      setIsActive(false);
+    }
+  }, [timeLeft]);
+
   return (
     <>
       <article id="countdown-timer">
@@ -22,7 +44,7 @@ export function CountdownTimer(): ReactElement {
           <h2>Timer</h2>
           <div className="actions">
             <Button icon="restart_alt" />
-            <Button icon="pause" />
+            <Button icon={computedCountdownState} />
           </div>
         </header>
         <h1 className="countdown">{timeLeft}</h1>
