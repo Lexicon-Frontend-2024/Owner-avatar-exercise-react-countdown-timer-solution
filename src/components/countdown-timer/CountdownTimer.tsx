@@ -2,16 +2,23 @@ import { FormEventHandler, ReactElement, useEffect, useRef, useState } from "rea
 import { Button } from "../button";
 
 export function CountdownTimer(): ReactElement {
-  const [isActive, setIsActive] = useState<boolean>(true);
-  const [timeLeft, setTimeLeft] = useState<number>(5);
+  const [duration, setDuration] = useState<number>(60);
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const [timeLeft, setTimeLeft] = useState<number>(duration);
   const [value, setValue] = useState<number | string>("");
 
   const timerId = useRef<number>();
   const computedCountdownState = isActive ? "pause" : "play_arrow";
 
+  const handleOnReset = () => {
+    setIsActive(false);
+    setTimeLeft(duration);
+  };
+
   const handleOnSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
+    setDuration(value as number);
     setTimeLeft(value as number);
     setValue("");
   };
@@ -43,8 +50,8 @@ export function CountdownTimer(): ReactElement {
         <header className="countdown-header">
           <h2>Timer</h2>
           <div className="actions">
-            <Button icon="restart_alt" />
-            <Button icon={computedCountdownState} />
+            <Button icon="restart_alt" onClick={handleOnReset} />
+            <Button icon={computedCountdownState} onClick={() => setIsActive((ia) => !ia)} />
           </div>
         </header>
         <h1 className="countdown">{timeLeft}</h1>
