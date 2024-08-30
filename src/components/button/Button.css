@@ -1,0 +1,17 @@
+.button {
+  display: flex;
+  align-items: center;
+
+  background-color: transparent;
+  border: 1px solid whitesmoke;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: whitesmoke;
+
+    .icon {
+      color: black;
+    }
+  }
+}
