@@ -1,10 +1,12 @@
-import { FormEventHandler, ReactElement, useState } from "react";
+import { FormEventHandler, ReactElement, useRef, useState } from "react";
 import { Button } from "../button";
 
 export function CountdownTimer(): ReactElement {
   const [isActive, setIsActive] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState<number>(80);
   const [value, setValue] = useState<number | string>("");
+
+  const timerId = useRef<number>();
 
   const handleOnSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
